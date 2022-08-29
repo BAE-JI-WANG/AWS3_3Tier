@@ -2,6 +2,8 @@
 ----
 ## 1차 구상 인프라
 
-![aws_3_infra_v1 0 0 drawio](https://user-images.githubusercontent.com/59479926/187140660-e496e748-7787-4e4e-8c7f-fa925e41c473.png)
+![aws_3_infra_v1 0 0](https://user-images.githubusercontent.com/59479926/187157250-2cf3f658-1231-47b4-91bf-7325f18e5ccc.jpg)
+![description](https://user-images.githubusercontent.com/59479926/187157266-74770c11-56f8-4a38-a042-4a9204947ea8.jpg)
 
-![description](https://user-images.githubusercontent.com/59479926/187141050-a5415be5-e8b1-476f-8667-f33138f266a9.png)
+
+
