@@ -29,9 +29,9 @@ resource "aws_nat_gateway" "awesome-ap2-nat" {
 }
 
 # Subnet Ids
-data "aws_subnet_ids" "awesome_public_subnets" {
-  vpc_id = aws_vpc.awesome-vpc.id
-}
+# data "aws_subnet_ids" "awesome_public_subnets" {
+#   vpc_id = aws_vpc.awesome-vpc.id
+# }
 
 # Route Table
 resource "aws_route_table" "awesome-ap2-pub-rt" {
