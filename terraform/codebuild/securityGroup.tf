@@ -97,7 +97,8 @@ resource "aws_security_group_rule" "awesome-ap2-web-sg-rule-ajp" {
     from_port         = 8009
     to_port           = 8009
     protocol          = "tcp"
-    source_security_group_id = aws_security_group.awesome-ap2-web-sg.id
+    # source_security_group_id = aws_security_group.awesome-ap2-web-sg.id
+    cidr_blocks = ["10.0.0.0/16"]
     security_group_id = aws_security_group.awesome-ap2-was-sg.id
     description       = "Allow AJP(8009) from Web SG"
 }

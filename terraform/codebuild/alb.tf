@@ -48,9 +48,8 @@ resource "aws_launch_configuration" "awsome-ap2-web-conf" {
 #!/bin/bash
 sudo su
 source /etc/profile
-cd /mnt/efs/app/spring-petclinic/target/
-java -jar -Dspring.profiles.active="mysql" *.jar
-
+cd /mnt/efs/apache/bin/
+./apachectl start
 EOF
     security_groups = [aws_security_group.awesome-ap2-web-sg.id]
     lifecycle {

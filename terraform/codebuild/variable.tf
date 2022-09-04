@@ -8,3 +8,6 @@ variable "web_key" {}
 variable "was_key" {}
 variable "bastion_key" {}
 
+variable "db_name" {}
+variable "db_username" {}
+variable "db_password" {}
