@@ -1,67 +1,91 @@
 # ALB
 resource "aws_lb" "awsome-ap2-was-nlb" {
-    name               = "awsome-ap2-wab-nlb"
-    internal           = true
-    load_balancer_type = "network"
+  name               = "was-nlb"
+  internal           = true
+  load_balancer_type = "network"
 
-    subnets            = [aws_subnet.awesome-ap-was-sub-2a.id, aws_subnet.awesome-ap-was-sub-2c.id]
-    tags = {
-        "Name" = "awsome-ap2-was-nlb"
-    }
+  subnets = [aws_subnet.awesome-ap-was-sub-2a.id, aws_subnet.awesome-ap-was-sub-2c.id]
+  tags = {
+    "Name" = "awesome-ap2-was-nlb"
+  }
 }
 
 # Target Group
 resource "aws_lb_target_group" "awsome-ap2-was-tg" {
-    name     = "awsome-ap2-was-tg"
-    port     = 8009
-    protocol = "TCP"
-    vpc_id   = aws_vpc.awesome-vpc.id
+  name_prefix = "wastg-"
+  port     = 8009
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.awesome-vpc.id
 
-    tags = {
-        "Name" = "awsome-ap2-was-tg"
-    }
+  lifecycle {
+    create_before_destroy = true
+  }
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    matcher             = "8009"
+    interval            = 15
+    timeout             = 3
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+
+
+  }
+
+  tags = {
+    "Name" = "awsome-ap2-was-tg"
+  }
 }
 
-resource "aws_lb_target_group_attachment" "awsome-ap2-was-tg-att" {
-    target_group_arn = aws_lb_target_group.awsome-ap2-was-tg.arn
-    target_id = aws_launch_configuration.awsome-ap2-was-conf.id
-    port = 8009
-}
+# resource "aws_lb_target_group_attachment" "awsome-ap2-was-tg-att" {
+#   target_group_arn = aws_lb_target_group.awsome-ap2-was-tg.arn
+#   target_id        = aws_autoscaling_group.awsome-ap2-was-as.id
+#   port             = 8009
+# }
 
+# lb_listener
 resource "aws_lb_listener" "awsome-ap2-was-nlb-listen" {
-    load_balancer_arn = aws_lb.awsome-ap2-was-nlb.arn
-    port = 8009
-    protocol = "TCP"
+  load_balancer_arn = aws_lb.awsome-ap2-was-nlb.arn
+  port              = 8009
+  protocol          = "TCP"
 
-    default_action {
-        type = "forward"
-        target_group_arn = aws_lb_target_group.awsome-ap2-was-tg.arn
-    }
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.awsome-ap2-was-tg.arn
+  }
 }
 
 # Launch Configuration
 resource "aws_launch_configuration" "awsome-ap2-was-conf" {
-    name_prefix     = "awsome-ap2-was-"
-    image_id        = var.was_ami
-    instance_type   = "t2.micro"
-    user_data       = <<EOF
-#!/bin/bash
-sudo su
-source /etc/profile
-cd /mnt/efs/app/spring-petclinic/target/
-java -jar -Dspring.profiles.active="mysql" *.jar
-EOF
-    security_groups = [aws_security_group.awesome-ap2-was-sg.id]
-    lifecycle {
-        create_before_destroy = true
-    }
+  name_prefix     = "awsome-ap2-was-"
+  image_id        = var.was_ami
+  instance_type   = "t2.micro"
+  user_data       = file("was.sh")
+  security_groups = [aws_security_group.awesome-ap2-was-sg.id]
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Auto Scaling group
 resource "aws_autoscaling_group" "awsome-ap2-was-as" {
-    min_size             = 4
-    max_size             = 8
-    desired_capacity     = 4
-    launch_configuration = aws_launch_configuration.awsome-ap2-was-conf.name
-    vpc_zone_identifier  = [aws_subnet.awesome-ap-was-sub-2a.id, aws_subnet.awesome-ap-was-sub-2c.id]
+  name_prefix          = "awsome-ap2-was-as-"
+  launch_configuration = aws_launch_configuration.awsome-ap2-was-conf.name
+  vpc_zone_identifier  = [aws_subnet.awesome-ap-was-sub-2a.id, aws_subnet.awesome-ap-was-sub-2c.id]
+  target_group_arns    = [aws_lb_target_group.awsome-ap2-was-tg.arn]
+  health_check_type    = "ELB"
+  desired_capacity     = 4
+  min_size             = 2
+  max_size             = 10
+
+  tag {
+    key                 = "Name"
+    value               = "asg-was"
+    propagate_at_launch = true
+  }
 }
+
+# resource "aws_autoscaling_attachment" "awsome-ap2-was-as-att" {
+#   autoscaling_group_name = aws_autoscaling_group.awsome-ap2-was-as.id
+#   lb_target_group_arn    = aws_lb.awsome-ap2-was-nlb.arn
+# }

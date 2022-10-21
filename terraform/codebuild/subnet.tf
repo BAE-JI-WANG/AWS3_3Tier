@@ -12,8 +12,8 @@ resource "aws_subnet" "awesome-ap-pub-sub-2a" {
 
 // Priavte
 resource "aws_subnet" "awesome-ap-web-sub-2a" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.11.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.11.0/24"
   availability_zone = var.availability_zones_a
 
   tags = {
@@ -22,8 +22,8 @@ resource "aws_subnet" "awesome-ap-web-sub-2a" {
 }
 
 resource "aws_subnet" "awesome-ap-was-sub-2a" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.12.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.12.0/24"
   availability_zone = var.availability_zones_a
 
   tags = {
@@ -32,8 +32,8 @@ resource "aws_subnet" "awesome-ap-was-sub-2a" {
 }
 
 resource "aws_subnet" "awesome-ap-db-sub-2a" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.13.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.13.0/24"
   availability_zone = var.availability_zones_a
 
   tags = {
@@ -42,8 +42,8 @@ resource "aws_subnet" "awesome-ap-db-sub-2a" {
 }
 
 resource "aws_subnet" "awesome-ap-web-efs-sub-2a" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.14.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.14.0/24"
   availability_zone = var.availability_zones_a
 
   tags = {
@@ -52,8 +52,8 @@ resource "aws_subnet" "awesome-ap-web-efs-sub-2a" {
 }
 
 resource "aws_subnet" "awesome-ap-was-efs-sub-2a" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.15.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.15.0/24"
   availability_zone = var.availability_zones_a
 
   tags = {
@@ -76,8 +76,8 @@ resource "aws_subnet" "awesome-ap-pub-sub-2c" {
 
 // Priavte
 resource "aws_subnet" "awesome-ap-web-sub-2c" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.21.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.21.0/24"
   availability_zone = var.availability_zones_c
 
   tags = {
@@ -86,8 +86,8 @@ resource "aws_subnet" "awesome-ap-web-sub-2c" {
 }
 
 resource "aws_subnet" "awesome-ap-was-sub-2c" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.22.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.22.0/24"
   availability_zone = var.availability_zones_c
 
   tags = {
@@ -96,8 +96,8 @@ resource "aws_subnet" "awesome-ap-was-sub-2c" {
 }
 
 resource "aws_subnet" "awesome-ap-db-sub-2c" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.23.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.23.0/24"
   availability_zone = var.availability_zones_c
 
   tags = {
@@ -106,8 +106,8 @@ resource "aws_subnet" "awesome-ap-db-sub-2c" {
 }
 
 resource "aws_subnet" "awesome-ap-web-efs-sub-2c" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.24.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.24.0/24"
   availability_zone = var.availability_zones_c
 
   tags = {
@@ -116,8 +116,8 @@ resource "aws_subnet" "awesome-ap-web-efs-sub-2c" {
 }
 
 resource "aws_subnet" "awesome-ap-was-efs-sub-2c" {
-  vpc_id = aws_vpc.awesome-vpc.id
-  cidr_block = "10.0.25.0/24"
+  vpc_id            = aws_vpc.awesome-vpc.id
+  cidr_block        = "10.0.25.0/24"
   availability_zone = var.availability_zones_c
 
   tags = {
