@@ -14,7 +14,7 @@ resource "aws_lb" "awsome-ap2-was-nlb" {
 resource "aws_lb_target_group" "awsome-ap2-was-tg" {
   name_prefix = "wastg-"
   port     = 8009
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = aws_vpc.awesome-vpc.id
 
   lifecycle {
@@ -23,13 +23,11 @@ resource "aws_lb_target_group" "awsome-ap2-was-tg" {
   health_check {
     path                = "/"
     protocol            = "HTTP"
-    matcher             = "8009"
+    matcher             = "200"
     interval            = 15
     timeout             = 3
     healthy_threshold   = 2
     unhealthy_threshold = 2
-
-
   }
 
   tags = {
@@ -82,6 +80,13 @@ resource "aws_autoscaling_group" "awsome-ap2-was-as" {
     key                 = "Name"
     value               = "asg-was"
     propagate_at_launch = true
+  }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
   }
 }
 

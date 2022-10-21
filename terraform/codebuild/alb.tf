@@ -110,6 +110,13 @@ resource "aws_autoscaling_group" "awsome-ap2-web-as" {
     value               = "asg-web"
     propagate_at_launch = true
   }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+  }
 }
 
 
